@@ -8,7 +8,81 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    
+    <div id="menu">
+        <div id="toolbar">
+            <!--用js的evenlistener讀按的動作，可以加按鈕回饋感-->
+            <img src="asset/start.png" alt="start" id="start" class="buttom">
+            <img src="asset/pause.png" alt="pause" id="pause" class="buttom">
+            <img src="asset/reset.png" alt="reset" id="reset" class="buttom">
+        </div>
+
+        <div  id="player_inf">
+            <h1>Ghost Chasing</h1>
+            <img src="asset/ghost.png" alt="ghost">
+
+            <!--用js的getelementbyid改div裡的內容-->
+            <div class="inf" id="p1_inf">
+                <h2>Player1</h2>
+                <h3>Count: 0</h3>
+            </div>
+            <div class="inf" id="p2_inf">
+                <h2>Player2</h2>
+                <h3>Count: 0</h3>
+            </div>
+            <div class="inf" id="p3_inf">
+                <h2>Player3</h2>
+                <h3>Count: 0</h3>
+            </div>
+        </div>
+    </div>
+
+    <div id="game_area">
+        <div class="safearea" id="s1">
+            <h2>SAFE</h2>
+        </div>
+
+        <div class="safearea" id="s2">
+            <h2>SAFE</h2>
+        </div>
+        
+        <div class="safearea" id="s3">
+            <h2>SAFE</h2>
+        </div>
+
+        <div class="safearea" id="s4">
+            <h2>SAFE</h2>
+        </div>
+
+        <div class="role" id="p1">
+            <img src="asset/player1.png" alt="player1">
+            <p>player1</p>
+        </div>
+        <div class="role" id="p2">
+            <img src="asset/player2.png" alt="player2">
+            <p>player2</p>
+        </div>
+        <div class="role" id="p3">
+            <img src="asset/player3.png" alt="player3">
+            <p>player3</p>
+        </div>
+
+        <div id="text">
+            <h2>Enter players' name</h2>
+            <input type="text" placeholder="Player1"> <!--這裡的placeholder要隨著輸入改變-->
+            <button type="submit">OK</button>
+            <p></p>
+            <!--玩家名字輸入完成後改成下面的內容-->
+            <!-- <p>Control</p>
+            <p>Player1: up down left right</p>
+            <p>Player2: UJHK</p>
+            <p>Player3: WSAD</p>
+            <p>HINT: Safe area is safe.</p>
+            <p></p> -->
+
+            <!--開始之後變成計時器，想法是顯示半透明數字在遊戲區-->
+            <!--結束後顯示成績-->
+        </div>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
