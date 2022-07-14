@@ -1,58 +1,79 @@
-var player1 = {
-    left:false,
-    right:false,
-    up:false,
-    down:false,
-    role:document.getElementById("p1"),
-    pc:document.getElementById("p1coun"),
-    pcn:0,
-    pout:true
-};
-var player2 = {
-    left:false,
-    right:false,
-    up:false,
-    down:false,
-    role:document.getElementById("p2"),
-    pc:document.getElementById("p2coun"),
-    pcn:0,
-    pout:true
-};
-var player3 = {
-    left:false,
-    right:false,
-    up:false,
-    down:false,
-    role:document.getElementById("p3"),
-    pc:document.getElementById("p3coun"),
-    pcn:0,
-    pout:true
-};
-
+//初始設定
+var playerlist = document.getElementsByClassName("role");
 var gamearea = document.getElementById("game_area");
 var safearea1 = document.getElementById("s1");
 var safearea2 = document.getElementById("s2");
 var safearea3 = document.getElementById("s3");
 var safearea4 = document.getElementById("s4");
 
-function gameareaboundery(who,position){
-    if(who.role.offsetLeft>0 && position=="left"){
-        return true;
+//設定一個player的class
+class player{
+    constructor(num,count){
+        this.left = false;
+        this.right = false;
+        this.up = false;
+        this.down = false;
+        this.role = playerlist[num];
+        this.pc = document.getElementById(count);
+        this.pcn = 0;
+        this.pout = true;
     }
-    else if(who.role.offsetLeft<gamearea.offsetWidth-who.role.offsetWidth && position=="right"){
-        return true;
-    }
-    else if(who.role.offsetTop>0 && position=="up"){
-        return true;
-    }
-    else if(who.role.offsetTop<gamearea.offsetHeight-who.role.offsetHeight && position=="down"){
-        return true;
-    }
-    else{
-        return false;
+    hitbox(others){
+        var touch = false;
+        if (this.role.offsetTop-40>others.role.offsetTop-this.role.offsetHeight && this.role.offsetTop+40<others.role.offsetTop+others.role.offsetHeight && this.role.offsetLeft-50>others.role.offsetLeft-this.role.offsetWidth && this.role.offsetLeft+40<others.role.offsetLeft+others.role.offsetWidth){
+            this.role.style.left=this.role.offsetLeft+30+'px';
+            touch = true;
+        }
+        if (this.role.offsetTop-40>others.role.offsetTop-this.role.offsetHeight && this.role.offsetTop+40<others.role.offsetTop+others.role.offsetHeight && this.role.offsetLeft-40>others.role.offsetLeft-this.role.offsetWidth && this.role.offsetLeft+50<others.role.offsetLeft+others.role.offsetWidth){
+            this.role.style.left=this.role.offsetLeft-30+'px';
+            touch = true;
+        }
+        if (this.role.offsetTop-40>others.role.offsetTop-this.role.offsetHeight && this.role.offsetTop+50<others.role.offsetTop+others.role.offsetHeight && this.role.offsetLeft-40>others.role.offsetLeft-this.role.offsetWidth && this.role.offsetLeft+40<others.role.offsetLeft+others.role.offsetWidth){
+            this.role.style.top=this.role.offsetTop-30+'px';
+            touch = true;
+        }
+        if (this.role.offsetTop-50>others.role.offsetTop-this.role.offsetHeight && this.role.offsetTop+40<others.role.offsetTop+others.role.offsetHeight && this.role.offsetLeft-40>others.role.offsetLeft-this.role.offsetWidth && this.role.offsetLeft+40<others.role.offsetLeft+others.role.offsetWidth){
+            this.role.style.top=this.role.offsetTop+30+'px';
+            touch = true;
+        }
+        return touch;
     }
 }
 
+//新增三位玩家
+var player1 = new player(0,"p1coun");
+var player2 = new player(1,"p2coun");
+var player3 = new player(2,"p3coun");
+
+//移動功能function
+function move(who){
+    if(who.left){
+        who.role.style.left=who.role.offsetLeft-10+'px';
+    }
+    if(who.right){
+        who.role.style.left=who.role.offsetLeft+10+'px';
+    }
+    if(who.up){
+        who.role.style.top=who.role.offsetTop-10+'px';
+    }
+    if(who.down){
+        who.role.style.top=who.role.offsetTop+10+'px';
+    }
+    if(who.role.offsetLeft<0){
+        who.role.style.left=who.role.offsetLeft+10+'px';
+    }
+    if(who.role.offsetLeft>gamearea.offsetWidth-who.role.offsetWidth){
+        who.role.style.left=who.role.offsetLeft-10+'px';
+    }
+    if(who.role.offsetTop<0){
+        who.role.style.top=who.role.offsetTop+10+'px';
+    }
+    if(who.role.offsetTop>gamearea.offsetHeight-who.role.offsetHeight){
+        who.role.style.top=who.role.offsetTop-10+'px';
+    }
+}
+
+//安全區記數function
 function safeareaboundery(who){
     if (who.role.offsetTop<safearea1.offsetHeight-who.role.offsetHeight && who.role.offsetLeft<safearea1.offsetWidth-who.role.offsetWidth){
         if (who.pout){
@@ -87,133 +108,58 @@ function safeareaboundery(who){
     }
 }
 
+//鍵盤偵測function
+function deckey(event,who,left,right,up,down,boolin){
+    if (event.key == left){
+        who.left=boolin;
+    }
+    if (event.key == right){
+        who.right=boolin;
+    }
+    if (event.key == up){
+        who.up=boolin;
+    }
+    if (event.key == down){
+        who.down=boolin;
+    }
+}
+
+//需要執行的function
 setInterval(function(){
 //1
-    if(player1.left && gameareaboundery(player1,"left")){
-        player1.role.style.left=player1.role.offsetLeft-10+'px';
-    }
-    if(player1.right && gameareaboundery(player1,"right")){
-        player1.role.style.left=player1.role.offsetLeft+10+'px';
-    }
-    if(player1.up && gameareaboundery(player1,"up")){
-        player1.role.style.top=player1.role.offsetTop-10+'px';
-    }
-    if(player1.down && gameareaboundery(player1,"down")){
-        player1.role.style.top=player1.role.offsetTop+10+'px';
-    }
+    player1.hitbox(player2);
+    player1.hitbox(player3);
+    move(player1);
 //2
-    if(player2.left && gameareaboundery(player2,"left")){
-        player2.role.style.left=player2.role.offsetLeft-10+'px';
-    }
-    if(player2.right && gameareaboundery(player2,"right")){
-        player2.role.style.left=player2.role.offsetLeft+10+'px';
-    }
-    if(player2.up && gameareaboundery(player2,"up")){
-        player2.role.style.top=player2.role.offsetTop-10+'px';
-    }
-    if(player2.down && gameareaboundery(player2,"down")){
-        player2.role.style.top=player2.role.offsetTop+10+'px';
-    }
+    player2.hitbox(player1);
+    player2.hitbox(player3);
+    move(player2);
 //3
-    if(player3.left && gameareaboundery(player3,"left")){
-        player3.role.style.left=player3.role.offsetLeft-10+'px';
-    }
-    if(player3.right && gameareaboundery(player3,"right")){
-        player3.role.style.left=player3.role.offsetLeft+10+'px';
-    }
-    if(player3.up && gameareaboundery(player3,"up")){
-        player3.role.style.top=player3.role.offsetTop-10+'px';
-    }
-    if(player3.down && gameareaboundery(player3,"down")){
-        player3.role.style.top=player3.role.offsetTop+10+'px';
-    }
-    
+    player3.hitbox(player1);
+    player3.hitbox(player2);
+    move(player3);
 //safe area
     safeareaboundery(player1);
     safeareaboundery(player2);
     safeareaboundery(player3);
 },50)
 
+//偵測鍵盤抬起
 document.addEventListener("keyup",function(event){
 //1
-    if (event.key == "ArrowLeft"){
-        player1.left=false;
-    }
-    if (event.key == "ArrowRight"){
-        player1.right=false;
-    }
-    if (event.key == "ArrowUp"){
-        player1.up=false;
-    }
-    if (event.key == "ArrowDown"){
-        player1.down=false;
-    }
+    deckey(event,player1,"ArrowLeft","ArrowRight","ArrowUp","ArrowDown",false);
 //2
-    if (event.key == "h"){
-        player2.left=false;
-    }
-    if (event.key == "k"){
-        player2.right=false;
-    }
-    if (event.key == "u"){
-        player2.up=false;
-    }
-    if (event.key == "j"){
-        player2.down=false;
-    }
+    deckey(event,player2,"h","k","u","j",false);
 //3
-    if (event.key == "a"){
-        player3.left=false;
-    }
-    if (event.key == "d"){
-        player3.right=false;
-    }
-    if (event.key == "w"){
-        player3.up=false;
-    }
-    if (event.key == "s"){
-        player3.down=false;
-    }
+    deckey(event,player3,"a","d","w","s",false);
 })
 
+//偵測鍵盤按下
 document.addEventListener("keydown",function(event){
 //1
-if (event.key == "ArrowLeft"){
-    player1.left=true;
-}
-if (event.key == "ArrowRight"){
-    player1.right=true;
-}
-if (event.key == "ArrowUp"){
-    player1.up=true;
-}
-if (event.key == "ArrowDown"){
-    player1.down=true;
-}
+    deckey(event,player1,"ArrowLeft","ArrowRight","ArrowUp","ArrowDown",true);
 //2
-if (event.key == "h"){
-    player2.left=true;
-}
-if (event.key == "k"){
-    player2.right=true;
-}
-if (event.key == "u"){
-    player2.up=true;
-}
-if (event.key == "j"){
-    player2.down=true;
-}
+    deckey(event,player2,"h","k","u","j",true);
 //3
-if (event.key == "a"){
-    player3.left=true;
-}
-if (event.key == "d"){
-    player3.right=true;
-}
-if (event.key == "w"){
-    player3.up=true;
-}
-if (event.key == "s"){
-    player3.down=true;
-}
+    deckey(event,player3,"a","d","w","s",true);
 })
