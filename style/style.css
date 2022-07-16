@@ -4,7 +4,6 @@ body{
 }
 
 #countdown-number{
-
 color: red;
 font-size: 26px;
 }
@@ -18,9 +17,9 @@ font-size: 26px;
 }
 
 #toolbar{
-    float:top;
-    display: flex;
-    border-width:auto;
+    width: 100%;
+    height: 15%;
+    float: top;
 }
 
 #player_inf{
@@ -87,6 +86,12 @@ font-size: 26px;
     border-style: dashed;
     border-color: white;
 }
+#stop{
+    width: 20%;
+}
+#stop:hover{
+    transform: scale(1.1);
+}
 /* role */
 #p1{
     top: 15%;
@@ -104,12 +109,13 @@ font-size: 26px;
 }
 
 /* class css */
-#stop,#start,#reset{
-    background-color: transparent;
-    width: 100%;
-    /* 附近有刪不掉的邊框範圍 */
-    border: none;
+.buttom{
+    height: 85%;
+    margin-left: 6%;
     border-radius: 100%;
+    border-style: outset;
+    border-width: 5px;
+    border-color: aqua;
 }
 
 .safearea{
