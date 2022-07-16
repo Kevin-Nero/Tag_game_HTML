@@ -3,6 +3,12 @@ body{
     font-family: "Helvetica","Arial",sans-serif;
 }
 
+#countdown-number{
+
+color: red;
+font-size: 26px;
+}
+
 #menu{
     width: 25%;
     height: 90vh;
@@ -12,10 +18,9 @@ body{
 }
 
 #toolbar{
-    width: 100%;
-    height: 15%;
-    float: top;
-
+    float:top;
+    display: flex;
+    border-width:auto;
 }
 
 #player_inf{
@@ -34,7 +39,7 @@ body{
     margin-bottom: -5%;
 }
 
-/* game_area css*/
+/* game_area css */
 #game_area{
     width: 65%;
     height: 90vh;
@@ -99,14 +104,14 @@ body{
 }
 
 /* class css */
-.buttom{
-    height: 85%;
-    margin-left: 6%;
+#stop,#start,#reset{
+    background-color: transparent;
+    width: 100%;
+    /* 附近有刪不掉的邊框範圍 */
+    border: none;
     border-radius: 100%;
-    border-style: outset;
-    border-width: 5px;
-    border-color: aqua;
 }
+
 .safearea{
     width: 17%;
     height: 17%;
